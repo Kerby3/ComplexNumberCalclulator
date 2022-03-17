@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Действия с комплексными числами</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="number1">
+		<div class="real1">
+			<label class="real1Label real">Реальная часть</label>
+			<input type="text" class="real1Input real" onkeydown="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" value="0">
+		</div>
+		<div class="imaginary1">
+			<label class="imaginary1Label imaginary">Мнимая часть</label>
+			<input type="text" class="imaginary1Input imaginary" onkeydown="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" value="0"> i
+		</div>
+	</div>
+	<select name="sign" id="sign" class="sign">
+		<option selected value="+">+</option>
+		<option value="-">-</option>
+		<option value="*">*</option>
+		<option value="/">/</option>
+	</select>
+	<div class="number2">
+		<div class="real2">
+			<label class="real2Label real">Реальная часть</label>
+			<input type="text" class="real2Input real" onkeydown="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" value="0">
+		</div>
+		<div class="imaginary2">
+			<label class="imaginary2Label imaginary">Мнимая часть</label>
+			<input type="text" class="imaginary2Input imaginary" onkeydown="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" onkeyup="this.value = this.value.replace(/[A-Za-zА-Яа-яЁё\s\,\\\!\$\;\%\^\:\*\+]/, '');" value="0"> i
+		</div>
+	</div>
+	<input type="submit" class="calculate" value="Посчитать">
+	<div id="myChart" class="chart--container">
+		<a class="zc-ref" href="https://www.zingchart.com/">Powered by ZingChart</a>
+	</div>
+	<script type="text/javascript" src="Fraction.js-master/Fraction.js-master/fraction.js"></script>
+	<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+	<script src="script.js"></script>	
+</body>
+</html>
