@@ -5,6 +5,32 @@ let imaginaryInput1 = document.querySelector('.imaginary1Input');
 let realInput2 = document.querySelector('.real2Input');
 let imaginaryInput2 = document.querySelector('.imaginary2Input');
 const ctx = document.getElementById('myChart') //объявления переменных
+/*const radians = {
+	0: 'Pi/2',
+	0.2617993878: 'Pi/12',
+	0.5235987756: 'Pi/6',
+	0.7853981634: 'Pi/4',
+	1.0471975512: 'Pi/3',
+	1.308996939: '(5*Pi)/12',
+	1.57079632679: 'Pi/2',
+	1.83259571459: '(7*Pi)/12',
+	2.09439510239: '(2*Pi)/3',
+	2.35619449019: '(3*Pi)/4',
+	2.61799387799: '(5*Pi)/6',
+	2.87979326579: '(11*Pi)/12',
+	3.14159265359: 'Pi',
+	3.40339204139: '(13*Pi)/12',
+	3.66519142919: '(7*Pi)/6',
+	3.92699081699: '(5*Pi)/4',
+	4.18879020479: '(4*Pi)/3',
+	4.45058959259: '(17*Pi)/12',
+	4.71238898038: '(3*Pi)/2',
+	4.97418836818: '(19*Pi)/12',
+	5.23598775598: '(5*Pi)/3',
+	5.49778714378: '(7*Pi)/4',
+	5.75958653158: '(11*Pi)/6',
+	6.02138591938: '(23*Pi)/12',
+}*/
 
 let complex = class Complex {
 	constructor(real, imaginary) {
@@ -31,6 +57,56 @@ const checkImaginary = (expression) => {
 	return expression;
 }//проверка мнимой части для красиво вывода
 
+const trigonometricNotation = (real, imag) => {
+	//console.log(`real=${real} imag=${imag}`);
+	let moduleOfNumber = Math.sqrt(real * real + imag * imag);
+	//console.log(`typeof(moduleOfNumber): ${typeof(moduleOfNumber)}`)
+	if (Number.isInteger(moduleOfNumber) != true) {
+		moduleOfNumber = `√(${real * real + imag * imag})`;
+	}
+	//console.log(`real: ${real} imag: ${imag}`);
+	let fiRad = Math.atan(imag/real);
+	let fiDegs = radInDeg(fiRad);
+	//console.log(`fiRad: ${fiRad}\tfiDegs:${fiDegs}`)
+	let fiWithPi = radWithPi(fiRad, (fiDegs).toFixed(0));
+	//alert(`fiWithPi: ${fiWithPi}`);
+	/*for (let radian in radians) {
+		console.log(`for..in: ${radian}`);
+		if (fiRad == radian) {
+			fiRad = radian;
+		}
+	}*/
+	//console.log(`fiRad = ${fiRad}`)
+	let trigonomtryNumber = '';
+	if (fiRad < 0) {
+		trigonomtryNumber = `${moduleOfNumber}(cos(${fiRad})-isin(${Math.abs(fiRad)}))`
+	} else {
+		trigonomtryNumber = `${moduleOfNumber}(cos(${fiRad})+isin(${fiRad}))`;
+	}
+	return trigonomtryNumber;
+}
+
+const radInDeg = (rad) => {
+	let degs = (180/Math.PI) * rad;
+	return degs;
+}
+
+const radWithPi = (rad, degs) => {
+	for (let i = 90; i >= 2; i--) {
+		if (180 % i == 0 && degs % i == 0) {
+			//alert(`i = ${180 / i}`);
+			return i;
+			break;
+		} else {
+			return degs
+		}
+	}
+	//let x = 180 / degs;
+	
+}
+
+//alert(Math.PI);
+
 const calculate = (realPart, imaginaryPart) => {
 	//console.log(`${realPart}\n${imaginaryPart}`);
 	//let parts = [];
@@ -42,11 +118,11 @@ const calculate = (realPart, imaginaryPart) => {
 	let imaginaryReturnFrac = imaginaryReturn.toFraction(true);
 	//console.log(`2. realReturnFrac: ${realReturnFrac}\nimaginaryReturnFrac: ${imaginaryReturnFrac}\nimaginaryReturn: ${imaginaryReturn}`);
 	if (checkNull(realReturnFrac) == '' && checkNull(imaginaryReturnFrac) == '') {
-		returnedString = 0;
+		returnedString = `0`;
 	} else if (checkNull(imaginaryReturnFrac) == 0) {
 		returnedString = realReturnFrac;
 	} else if (checkNull(realReturnFrac) == 0) {
-		return `${imaginaryReturnFrac}i`;
+		returnedString = `${imaginaryReturnFrac}i`;
 	} else {
 		if (imaginaryReturn.s >= 0) {
 			returnedString = (`${realReturnFrac} +${checkImaginary(imaginaryReturnFrac)}i`);
@@ -57,18 +133,18 @@ const calculate = (realPart, imaginaryPart) => {
 	}
 
 	if (checkNull(realPart) == '' && checkNull(imaginaryPart) == '') {
-		return 0;
+		return [0, returnedString, [realPart, checkImaginary(imaginaryPart), imaginaryPart]];
 	} else if (checkNull(imaginaryPart) == 0) {
-		return realPart;
+		return [realPart.toString(), returnedString, [realPart, checkImaginary(imaginaryPart), imaginaryPart]];
 	} else if (checkNull(realPart) == 0) {
-		return `${imaginaryPart}i`;
+		return [`${imaginaryPart}i`, returnedString, [realPart, checkImaginary(imaginaryPart), imaginaryPart]];
 	} else {
 		if (imaginaryPart >= 0) {
-			//console.log(returnedString);
-			return ([`${(realPart).toFixed(5)} +${(checkImaginary(imaginaryPart)).toFixed(5)}i`, returnedString]);
+			//console.log(`imaginaryPart: ${imaginaryPart}`);
+			return ([`${(realPart)} +${checkImaginary(imaginaryPart)}i`, returnedString, [realPart, checkImaginary(imaginaryPart), imaginaryPart]]);
 		} else {
 			//console.log(checkImaginary(imaginaryReturnFrac));
-			return ([`${(realPart).toFixed(5)} ${(checkImaginary(imaginaryPart)).toFixed(5)}i`, returnedString]);
+			return ([`${(realPart)} ${checkImaginary(imaginaryPart)}i`, returnedString, [realPart, checkImaginary(imaginaryPart), imaginaryPart]]);
 		}
 	}
 			
@@ -119,8 +195,10 @@ button.addEventListener('click', () => {
 			outputArray = calculate((complexNumber1.real * complexNumber2.real + complexNumber1.imaginary * complexNumber2.imaginary)/(complexNumber2.real * complexNumber2.real + complexNumber2.imaginary * complexNumber2.imaginary), (complexNumber2.real * complexNumber1.imaginary - complexNumber1.real * complexNumber2.imaginary)/(complexNumber2.real * complexNumber2.real + complexNumber2.imaginary * complexNumber2.imaginary));
 			break;
 	}
-	outputString = `${outputArray[1]}`
-	alert(outputString);
+	outputString = `${outputArray[0]}`;
+	let trigonometricNotationOfNumber = trigonometricNotation(outputArray[2][0], outputArray[2][2]);
+	alert(`тригонометрическая запись: ${trigonometricNotationOfNumber}\n\nалгебраическая запись: ${outputString}`);
+	//alert(`outputArray[0]: ${outputArray[0]}`)
 	if (outputArray[0].includes(' +')) {
 		tmp = outputArray[0].split(' +');
 		outputForPlot = {
@@ -135,7 +213,7 @@ button.addEventListener('click', () => {
 		}
 	} else if (outputArray[0].includes('i')){
 		tmp = outputArray[0].split('i');
-		console.log(outputArray)
+		//console.log(outputArray)
 		outputForPlot = {
 			real: 0,
 			imag: tmp[0]
@@ -149,7 +227,7 @@ button.addEventListener('click', () => {
 
 	valuesX = `-10:10:1`;
 	valuesY = `-10:10:1`;
-	console.log(valuesX);
+	//console.log(valuesX);
 
 
 	let chartConfig = {
@@ -226,7 +304,7 @@ button.addEventListener('click', () => {
 	    	}
 	  	},
 	  	scaleY: {
-	    	values: '-20:20:1',
+	    	values: '-20:20:2',
 	    	lineWidth: 0,
 	    	minorTicks: 4,
 	    	refValue: 0,
@@ -302,29 +380,40 @@ button.addEventListener('click', () => {
       id: 'myChart',
       data: chartConfig,
       output: 'canvas',
-      height: '120%',
+      height: '145%',
       width: '100%',
     });
 		
 });
 
 const fun = (real, imag) => {
-	console.log(`real: ${real} imag: ${imag} ${imag/real}`)
+	//console.log(`real: ${real} imag: ${imag} ${imag/real}`);
 	let v = [];
 	let endValue = 0;
-	if (real >= 0) {
+	if (real > 0) {
 		for (let i = 0; i <= real; i+=0.1) {
 			endValue = (imag/real) * i;
 			v.push([i, endValue]);
-			console.log(`i = ${i}\nendValue = ${endValue}\nv = ${v}`);
+			//console.log(`i = ${i}\nendValue = ${endValue}\nv = ${v}\n`);
 		}
-	} else {
-		console.log('123123');
+	} else if (real < 0){
+		//console.log('123123');
 		for (let i = 0; i >= real; i-=0.1) {
 			endValue = (imag/real) * i;
 			
 			v.push([i, endValue]);
-			console.log(`i = ${i}\nendValue = ${endValue}\nv = ${v}`);
+			//console.log(`i = ${i}\nendValue = ${endValue}\nv = ${v}`);
+		}
+	} else {
+		//alert(`real is 0`);
+		if (imag > 0) {
+			for (let i = 0; i <= imag; i += 0.1) {
+				v.push([0, i]);
+			}
+		} else {
+			for (let i = 0; i >= imag; i -= 0.1) {
+				v.push([0, i]);
+			}
 		}
 	}
 	//v.push(0, endValue);
