@@ -209,7 +209,6 @@ button.addEventListener('click', () => {
 			real: tmp[0],
 			imag: im
 		}
-		alert(`1. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	} else if (outputArray[0].includes(' ')) {
 		tmp = outputArray[0].split(' ');
 		im = tmp[1].slice(0, -1);
@@ -220,7 +219,6 @@ button.addEventListener('click', () => {
 			real: tmp[0],
 			imag: im
 		}
-		alert(`2. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	} else if (outputArray[0].includes('i')){
 		tmp = outputArray[0].split('i');
 		//console.log(outputArray)
@@ -228,13 +226,11 @@ button.addEventListener('click', () => {
 			real: 0,
 			imag: tmp[0]
 		}
-		alert(`3. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	} else {
 		outputForPlot = {
 			real: outputArray[0],
 			imag: 0
 		}
-		alert(`4. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	}
 	
 	valuesX = `-10:10:1`;
