@@ -201,16 +201,26 @@ button.addEventListener('click', () => {
 	//alert(`outputArray[0]: ${outputArray[0]}`)
 	if (outputArray[0].includes(' +')) {
 		tmp = outputArray[0].split(' +');
+		im = tmp[1].slice(0, -1);
+		if (im == '') {
+			im = 1;
+		}
 		outputForPlot = {
 			real: tmp[0],
-			imag: tmp[1].slice(0, -1)
+			imag: im
 		}
+		alert(`1. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	} else if (outputArray[0].includes(' ')) {
 		tmp = outputArray[0].split(' ');
+		im = tmp[1].slice(0, -1);
+		if (im == '-') {
+			im = -1;
+		}
 		outputForPlot = {
 			real: tmp[0],
-			imag: tmp[1].slice(0, -1)
+			imag: im
 		}
+		alert(`2. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	} else if (outputArray[0].includes('i')){
 		tmp = outputArray[0].split('i');
 		//console.log(outputArray)
@@ -218,13 +228,15 @@ button.addEventListener('click', () => {
 			real: 0,
 			imag: tmp[0]
 		}
+		alert(`3. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	} else {
 		outputForPlot = {
 			real: outputArray[0],
 			imag: 0
 		}
+		alert(`4. outputForPlot.real: ${outputForPlot.real}\noutputForPlot.imag: ${outputForPlot.imag}`)
 	}
-
+	
 	valuesX = `-10:10:1`;
 	valuesY = `-10:10:1`;
 	//console.log(valuesX);
@@ -394,7 +406,7 @@ const fun = (real, imag) => {
 		for (let i = 0; i <= real; i+=0.1) {
 			endValue = (imag/real) * i;
 			v.push([i, endValue]);
-			//console.log(`i = ${i}\nendValue = ${endValue}\nv = ${v}\n`);
+			console.log(`i = ${i}\nendValue = ${endValue}\nv = ${v}\n`);
 		}
 	} else if (real < 0){
 		//console.log('123123');
@@ -410,7 +422,7 @@ const fun = (real, imag) => {
 			for (let i = 0; i <= imag; i += 0.1) {
 				v.push([0, i]);
 			}
-		} else {
+		} else if (imag < 0) {
 			for (let i = 0; i >= imag; i -= 0.1) {
 				v.push([0, i]);
 			}
